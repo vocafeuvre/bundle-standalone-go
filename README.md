@@ -9,3 +9,18 @@ PoC on how to bundle apps with their dependencies into a Go standalone binary, f
 ## How the bundle runs apps or dependencies
 1. Extract binary file saved in binary and place it in a temp folder (with placeholder folder).
 2. Execute it from there, but the current working directory should be where the binary was run.
+
+## Usage
+First, make the `gui` module ready for use by running these commands inside it:
+````
+npm ci
+npm run build-all
+````
+
+It should output a `bin` directory inside. This `bin` directory contains the sample binary that we will bundle.
+
+After this, go inside `standalone`, and do ``go install``. This should install the `go-bindata` command.
+
+Generate the Go code that bundles the `gui` binary through this command: ``go-bindata -nocompress -o static.go ../gui/bin``
+
+To test, do ``go run .``. This should generate an `output` executable file.
